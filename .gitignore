@@ -8,4 +8,5 @@ crash.log
 *.json
 *.save
 *.save.*
+*.pem
 
