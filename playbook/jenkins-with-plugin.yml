@@ -82,10 +82,29 @@
         backup: yes
     - name: Restart Jenkins to make the plugin data available
       service: name=jenkins state=restarted
-    - name: some pause
-      shell: sleep 15
-    - name: Get init password Jenkins
-      shell: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+#    - name: some pause
+#      shell: sleep 15
+#    - name: Get init password Jenkins
+#      shell: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+#      changed_when: false
+#      register: result
+#    - name: init pass
+#      debug:
+#        var: result.stdout
+    - name: Generate an OpenSSH keypair with the default values (4096 bits, rsa)
+      openssh_keypair:
+        path: /home/ubuntu/.ssh/id_rsa
+        owner: ubuntu
+        group: ubuntu
+    - name: show .pub ssh-key
+      shell: cat /home/ubuntu/.ssh/id_rsa.pub
+      changed_when: false
+      register: result
+    - name: init pass
+      debug:
+        var: result.stdout
+    - name: show secret ssh key
+      shell: cat /home/ubuntu/.ssh/id_rsa
       changed_when: false
       register: result
     - name: init pass
