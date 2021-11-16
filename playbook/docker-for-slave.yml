@@ -1,0 +1,49 @@
+- name: Jenkins installation
+  hosts: [slave]
+  become: yes
+  tasks:
+    - name: Install git
+      apt:
+       name: git
+       state: present
+       update_cache: yes
+    - name: Install JAVA related Ubuntu packages
+      apt:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - default-jdk
+    - name: remove any installed docker
+      apt:
+        name:
+          - docker 
+          - docker-engine 
+          - docker.io 
+          - containerd 
+          - runc 
+        state: absent
+    - name: add docker-ce apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: docker-ce-stable deb repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    - name: Install Docker
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: latest
+    - name: add docker group
+      group:
+        name: docker
+        state: present
+    - name: adding jenkins user
+      shell: useradd jenkins
+    - name: adding jenkins to docker group
+      shell: usermod -aG docker jenkins
+      changed_when: false
+      register: result

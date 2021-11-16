@@ -1,0 +1,7 @@
+- name: Jenkins installation
+  hosts: [webservers]
+  become: yes
+  tasks:
+    
+    - name: Restart Jenkins to make the plugin data available
+      service: name=jenkins state=restarted

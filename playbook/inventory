@@ -1,0 +1,5 @@
+[webservers]
+35.246.144.137     ansible_connection=ssh        ansible_user=ubuntu
+
+[slave]
+34.141.3.199     ansible_connection=ssh        ansible_user=ubuntu

@@ -1,0 +1,93 @@
+- name: Jenkins installation
+  hosts: [webservers]
+  become: yes
+  tasks:
+    - name: Install git
+      apt:
+       name: git
+       state: present
+       update_cache: yes
+    - name: Install JAVA related Ubuntu packages
+      apt:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - default-jdk
+    - name: add Jenkins apt key
+      apt_key:
+        url: https://pkg.jenkins.io/debian/jenkins.io.key
+        state: present
+    - name: Jenkins deb repository
+      apt_repository:
+        repo: deb https://pkg.jenkins.io/debian binary/
+    - name: Install Jenkins
+      apt:
+        name:
+          - jenkins
+        state: latest
+    - name: Stop Jenkins (autostarts after install)
+      systemd:
+        name: jenkins
+        state: stopped
+    - name: start jenkins service
+      systemd:
+        name: jenkins
+        state: started
+    - name: remove any installed docker
+      apt:
+        name:
+          - docker 
+          - docker-engine 
+          - docker.io 
+          - containerd 
+          - runc 
+        state: absent
+    - name: add docker-ce apt key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: docker-ce-stable deb repository
+      apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+    - name: Install Docker
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: latest
+    - name: add docker group
+      group:
+        name: docker
+        state: present
+    - name: do a ssh reset in order to reflect the $USER group changes
+      meta: reset_connection
+    - name: start Docker service
+      systemd:
+        name: docker
+        state: started
+    - name: add jenkins to group docker
+      shell: usermod -aG docker jenkins
+      changed_when: false
+      register: result
+    - name: "Example1: Validate if a String or line is present in the file"
+      lineinfile:
+        path: /var/lib/jenkins/config.xml
+        # The String to Search
+        regexp: "  <useSecurity>true</useSecurity>" 
+        # The String to Replace
+        line: "  <useSecurity>false</useSecurity>"
+        state: present
+        backup: yes
+    - name: Restart Jenkins to make the plugin data available
+      service: name=jenkins state=restarted
+    - name: some pause
+      shell: sleep 15
+    - name: Get init password Jenkins
+      shell: sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+      changed_when: false
+      register: result
+    - name: init pass
+      debug:
+        var: result.stdout
