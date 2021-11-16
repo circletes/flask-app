@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent { label 'slave' }
     triggers { pollSCM('* * * * *') }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
@@ -18,7 +18,7 @@ pipeline {
         stage('Cloning Git') {
             steps {
                 // make link via Pipeline Syntax
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/valikkr/shared']]])       
+                checkout([$class: 'GitSCM', branches: [[name: '*/*']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/circletes/flask-app']]])       
             }
         }
     
