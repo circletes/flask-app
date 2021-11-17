@@ -50,3 +50,6 @@ provisioner "local-exec"{
 command = "echo '${tls_private_key.keys-for-jenkins.private_key_pem}'>./slave.pem"
 }
 }
+resource "google_compute_network" "default" {
+  name = "my-network"
+}

@@ -41,9 +41,7 @@
       group:
         name: docker
         state: present
-    - name: adding jenkins user
-      shell: useradd jenkins
     - name: adding jenkins to docker group
-      shell: usermod -aG docker jenkins
+      shell: usermod -aG docker ubuntu
       changed_when: false
       register: result
