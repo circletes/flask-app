@@ -47,6 +47,7 @@ pipeline {
          script {
             docker.withRegistry( '', registryCredential ) {
             dockerImage.push()
+            sh ' docker rmi $registry'
             }
         }
       }
@@ -60,7 +61,7 @@ pipeline {
          steps {
             sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
             sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
-            sh ' docker rmi $registry'
+          // sh ' docker rmi $registry'
          }
        }
     
