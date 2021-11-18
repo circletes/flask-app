@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Cloning Git') {
             agent { 
-                lable 'master'
+                label 'master'
                 }
             steps {
                 // make link via Pipeline Syntax
@@ -28,7 +28,7 @@ pipeline {
     // Building Docker images
     stage('Building image') {
          agent { 
-                lable 'master'
+                label 'master'
                 }
       steps{
         script {
@@ -41,7 +41,7 @@ pipeline {
      // Uploading Docker images into Docker Hub
     stage('Upload Image') {
          agent { 
-                lable 'master'
+                label 'master'
                 }
      steps{    
          script {
@@ -55,7 +55,7 @@ pipeline {
      // Stopping Docker containers for cleaner Docker run
      stage('docker stop container') {
           agent { 
-                lable 'slave'
+                label 'slave'
                 }
          steps {
             sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
@@ -68,7 +68,7 @@ pipeline {
     // Running Docker container, make sure port 8096 is opened in 
     stage('Docker Run') {
          agent { 
-                lable 'slave'
+                label 'slave'
                 }
      steps{
          script {
