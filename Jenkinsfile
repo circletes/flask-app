@@ -1,5 +1,6 @@
 pipeline {
     agent none
+    when { changeset "app/*"}
     triggers { pollSCM('* * * * *') }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
@@ -15,8 +16,7 @@ pipeline {
     }
     
     stages {
-        when { changeset "app/*"}
-         stage('Cloning Git') {
+       stage('Cloning Git') {
             agent { 
                 label 'master'
                 }
