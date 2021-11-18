@@ -28,6 +28,7 @@ pipeline {
     
     // Building Docker images
     stage('Building image') {
+        when { changeset "app/*"}
          agent { 
                 label 'master'
                 }
@@ -41,6 +42,7 @@ pipeline {
     
      // Uploading Docker images into Docker Hub
     stage('Upload Image') {
+        when { changeset "app/*"}
          agent { 
                 label 'master'
                 }
@@ -56,6 +58,7 @@ pipeline {
     
      // Stopping Docker containers for cleaner Docker run
      stage('docker stop container') {
+         when { changeset "app/*"}
           agent { 
                 label 'slave'
                 }
@@ -69,6 +72,7 @@ pipeline {
     
     // Running Docker container, make sure port 8096 is opened in 
     stage('Docker Run') {
+        when { changeset "app/*"}
          agent { 
                 label 'slave'
                 }
