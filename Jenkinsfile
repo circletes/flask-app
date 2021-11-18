@@ -16,7 +16,7 @@ pipeline {
     
     stages {
         when { changeset "app/*"}
-        stage('Cloning Git') {
+         stage('Cloning Git') {
             agent { 
                 label 'master'
                 }
