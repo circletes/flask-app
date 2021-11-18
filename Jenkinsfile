@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'slave' }
+    agent none
     triggers { pollSCM('* * * * *') }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5', artifactNumToKeepStr: '5'))
@@ -16,6 +16,9 @@ pipeline {
     
     stages {
         stage('Cloning Git') {
+            agent { 
+                lable 'master'
+                }
             steps {
                 // make link via Pipeline Syntax
                 checkout([$class: 'GitSCM', branches: [[name: '*/*']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/circletes/flask-app']]])       
@@ -24,6 +27,9 @@ pipeline {
     
     // Building Docker images
     stage('Building image') {
+         agent { 
+                lable 'master'
+                }
       steps{
         script {
             dockerImage = docker.build registry
@@ -34,6 +40,9 @@ pipeline {
     
      // Uploading Docker images into Docker Hub
     stage('Upload Image') {
+         agent { 
+                lable 'master'
+                }
      steps{    
          script {
             docker.withRegistry( '', registryCredential ) {
@@ -45,6 +54,9 @@ pipeline {
     
      // Stopping Docker containers for cleaner Docker run
      stage('docker stop container') {
+          agent { 
+                lable 'slave'
+                }
          steps {
             sh 'docker ps -f name=mypythonContainer -q | xargs --no-run-if-empty docker container stop'
             sh 'docker container ls -a -fname=mypythonContainer -q | xargs -r docker container rm'
@@ -55,6 +67,9 @@ pipeline {
     
     // Running Docker container, make sure port 8096 is opened in 
     stage('Docker Run') {
+         agent { 
+                lable 'slave'
+                }
      steps{
          script {
             dockerImage_1.run("-p 5000:5000 --rm --name mypythonContainer")
