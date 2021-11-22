@@ -45,3 +45,9 @@
       shell: usermod -aG docker ubuntu
       changed_when: false
       register: result
+    - name: adding jenkins to docker group
+      shell: useradd jenkins
+    - name: add jenkins to group docker
+      shell: usermod -aG docker jenkins
+      changed_when: false
+      register: result   

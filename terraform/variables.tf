@@ -37,7 +37,7 @@ variable "protocol" {
 }
 
 variable "ports" {
-    default = ["22", "8080", "5000"]
+    default = ["22", "8080", "5000", "50000"]
 }
 
 variable "algorithm" {
@@ -68,3 +68,15 @@ variable "tags" {
 variable "image" {
     default = "ubuntu-minimal-2004-focal-v20211030"
 }
+
+#variable "project_name" {
+#  description = "Google Cloud Platform (GCP) Project name."
+#  type        = string
+#  default     = "my-first"
+#}
+#
+#variable "node_machine_type"{
+#  description = "Machine type for kubernetes node."
+#  type        = string
+#  default     = "n2d-standard-2"
+#}

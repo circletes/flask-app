@@ -7,33 +7,33 @@
        name: git
        state: present
        update_cache: yes
-    - name: Install JAVA related Ubuntu packages
-      apt:
-        name: "{{ packages }}"
-        state: latest
-      vars:
-        packages:
-          - default-jdk
-    - name: add Jenkins apt key
-      apt_key:
-        url: https://pkg.jenkins.io/debian/jenkins.io.key
-        state: present
-    - name: Jenkins deb repository
-      apt_repository:
-        repo: deb https://pkg.jenkins.io/debian binary/
-    - name: Install Jenkins
-      apt:
-        name:
-          - jenkins
-        state: latest
-    - name: Stop Jenkins (autostarts after install)
-      systemd:
-        name: jenkins
-        state: stopped
-    - name: start jenkins service
-      systemd:
-        name: jenkins
-        state: started
+#    - name: Install JAVA related Ubuntu packages
+#      apt:
+#        name: "{{ packages }}"
+#        state: latest
+#      vars:
+#        packages:
+#          - default-jdk
+#   - name: add Jenkins apt key
+#     apt_key:
+#       url: https://pkg.jenkins.io/debian/jenkins.io.key
+#       state: present
+#   - name: Jenkins deb repository
+#     apt_repository:
+#       repo: deb https://pkg.jenkins.io/debian binary/
+#   - name: Install Jenkins
+#     apt:
+#       name:
+#         - jenkins
+#       state: latest
+#   - name: Stop Jenkins (autostarts after install)
+#     systemd:
+#       name: jenkins
+#       state: stopped
+#   - name: start jenkins service
+#     systemd:
+#       name: jenkins
+#       state: started
     - name: remove any installed docker
       apt:
         name:
@@ -67,21 +67,21 @@
       systemd:
         name: docker
         state: started
-    - name: add jenkins to group docker
-      shell: usermod -aG docker jenkins
-      changed_when: false
-      register: result
-    - name: "Example1: Validate if a String or line is present in the file"
-      lineinfile:
-        path: /var/lib/jenkins/config.xml
-        # The String to Search
-        regexp: "  <useSecurity>true</useSecurity>" 
-        # The String to Replace
-        line: "  <useSecurity>false</useSecurity>"
-        state: present
-        backup: yes
-    - name: Restart Jenkins to make the plugin data available
-      service: name=jenkins state=restarted
+#    - name: add jenkins to group docker
+#      shell: usermod -aG docker jenkins
+#      changed_when: false
+#      register: result
+#    - name: "Example1: Validate if a String or line is present in the file"
+#      lineinfile:
+#        path: /var/lib/jenkins/config.xml
+#        # The String to Search
+#        regexp: "  <useSecurity>true</useSecurity>" 
+#        # The String to Replace
+#        line: "  <useSecurity>false</useSecurity>"
+#        state: present
+#        backup: yes
+#    - name: Restart Jenkins to make the plugin data available
+#      service: name=jenkins state=restarted
 #    - name: some pause
 #      shell: sleep 15
 #    - name: Get init password Jenkins
@@ -104,6 +104,6 @@
       shell: cat /home/ubuntu/.ssh/id_rsa
       changed_when: false
       register: result
-    - name: init pass
-      debug:
-        var: result.stdout
+#    - name: init pass
+#      debug:
+#        var: result.stdout

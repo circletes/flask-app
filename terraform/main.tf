@@ -28,3 +28,14 @@ module "instances" {
   rsa_bits = var.rsa_bits
   depends_on = [module.firewall]
 }
+
+#module "cluster" {
+#  source                = "./modules/k8s-cluster/"
+#  region                = var.region
+#  project_id            = var.project_id
+#  cluster_name          = "${var.project_name}-cluster"
+#  cluster_nodepool_name = "${var.project_name}-nodepool"
+#  network               = var.network
+##  subnetwork            = module.network.subnetwork_name
+#  machine_type          = var.node_machine_type
+#}
