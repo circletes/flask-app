@@ -1,0 +1,8 @@
+- name: Jenkins installation
+  hosts: [slave]
+  become: yes
+  tasks:  
+    - name: clonning libs 
+      git: 
+        repo: "https://{{ githubuser | urlencode }}:{{ githubpassword | urlencode }}@github.com/valikkr/t.git"
+        dest: /home/test
