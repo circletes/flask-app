@@ -34,6 +34,10 @@ variable "rsa_bits"{
 
 }
 
+variable "apache_name"{
+
+}
+
 variable "algorithm"{
     
 }

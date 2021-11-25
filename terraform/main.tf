@@ -26,6 +26,7 @@ module "instances" {
   network = var.network
   algorithm = var.algorithm
   rsa_bits = var.rsa_bits
+  apache_name = var.apache_name
   depends_on = [module.firewall]
 }
 

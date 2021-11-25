@@ -69,6 +69,10 @@ variable "image" {
     default = "ubuntu-minimal-2004-focal-v20211030"
 }
 
+variable "apache_name" {
+    default = "apache"
+}
+
 #variable "project_name" {
 #  description = "Google Cloud Platform (GCP) Project name."
 #  type        = string

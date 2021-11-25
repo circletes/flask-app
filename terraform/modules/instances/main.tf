@@ -53,3 +53,27 @@ command = "echo '${tls_private_key.keys-for-jenkins.private_key_pem}'>./slave.pe
 resource "google_compute_network" "default" {
   name = "my-network"
 }
+
+
+resource "google_compute_instance" "vm-instance-for-apache" {
+project = var.project_id
+name = var.apache_name //"jenkins-web"
+machine_type = var.machine_type //"n2d-standard-2"
+tags = var.tags //["jenkins"]
+ metadata = {
+ssh-keys ="ubuntu:${tls_private_key.keys-for-jenkins.public_key_openssh}"
+}
+boot_disk {
+ initialize_params{
+  image = var.image //"ubuntu-minimal-2004-focal-v20211030"
+}
+}
+network_interface {
+network = var.network//"default"
+access_config{
+}
+}
+provisioner "local-exec"{
+command = "echo '${tls_private_key.keys-for-jenkins.private_key_pem}'>./apache.pem"
+}
+}

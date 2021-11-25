@@ -2,13 +2,13 @@
   hosts: [webservers]
   become: yes
   tasks:  
-    - name: clonning libs 
-      git: 
-        repo: "https://{{ githubuser | urlencode }}:{{ githubpassword | urlencode }}@github.com/valikkr/t.git"
-        dest: /home/ubuntu/test
-    - name: 
-      git: 
-        repo: "https://github.com/circletes/composer.git"
-        dest: /home/ubuntu/test1
-    - name: 
-      shell: docker-compose -f /home/ubuntu/test1/docker-compose.yml up -d  
+#    - name: clonning libs 
+#      git: 
+#        repo: "https://{{ githubuser | urlencode }}:{{ githubpassword | urlencode }}@github.com/valikkr/t.git"
+#        dest: /home/ubuntu/test
+#    - name: 
+#      git: 
+#        repo: "https://github.com/circletes/composer.git"
+#        dest: /home/ubuntu/test1
+     - name: 
+       shell: docker-compose -f /home/ubuntu/test1/docker-compose.yml up -d  
