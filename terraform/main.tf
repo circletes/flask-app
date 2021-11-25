@@ -2,6 +2,7 @@ provider "google" {
   project     = var.project_id
   region      = var.region
   zone        = var.zone
+  credentials = file("credentials.json")
 }
 
 module "firewall" {
@@ -22,21 +23,20 @@ module "instances" {
   ecdsa_curve = var.ecdsa_curve
   machine_type = var.machine_type
   tags = var.tags
+  project_name = var.project_name
   image = var.image
   network = var.network
   algorithm = var.algorithm
   rsa_bits = var.rsa_bits
+  network_name    = "${var.project_name}-vpc-${terraform.workspace}"
   apache_name = var.apache_name
   depends_on = [module.firewall]
 }
 
-#module "cluster" {
-#  source                = "./modules/k8s-cluster/"
-#  region                = var.region
-#  project_id            = var.project_id
-#  cluster_name          = "${var.project_name}-cluster"
-#  cluster_nodepool_name = "${var.project_name}-nodepool"
-#  network               = var.network
-##  subnetwork            = module.network.subnetwork_name
-#  machine_type          = var.node_machine_type
-#}
+module "network" {
+  source          = "./modules/network/"
+  region          = var.region
+  project_name    = var.project_name
+  project_id      = var.project_id
+  network_name    = "${var.project_name}-vpc-${terraform.workspace}"
+}

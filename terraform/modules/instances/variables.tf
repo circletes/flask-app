@@ -41,3 +41,11 @@ variable "apache_name"{
 variable "algorithm"{
     
 }
+
+variable "network_name" {
+
+}
+
+variable "project_name" {
+  
+}

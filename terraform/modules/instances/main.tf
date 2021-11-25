@@ -19,9 +19,10 @@ boot_disk {
 }
 }
 network_interface {
-network = var.network//"default"
-access_config{
-}
+network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
+subnetwork = "${var.network_name}-private-subnet"
+#access_config{
+#}
 }
 provisioner "local-exec"{
 command = "echo '${tls_private_key.keys-for-jenkins.private_key_pem}'>./mykey.pem"
@@ -42,9 +43,10 @@ boot_disk {
 }
 }
 network_interface {
-network = var.network//"default"
-access_config{
-}
+network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
+subnetwork = "${var.network_name}-private-subnet"
+#access_config{
+#}
 }
 provisioner "local-exec"{
 command = "echo '${tls_private_key.keys-for-jenkins.private_key_pem}'>./slave.pem"
@@ -69,7 +71,8 @@ boot_disk {
 }
 }
 network_interface {
-network = var.network//"default"
+network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
+subnetwork = "${var.network_name}-private-subnet"
 access_config{
 }
 }

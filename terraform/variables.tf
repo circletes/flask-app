@@ -84,3 +84,12 @@ variable "apache_name" {
 #  type        = string
 #  default     = "n2d-standard-2"
 #}
+variable "project_name" {
+  description = "Google Cloud Platform (GCP) Project name."
+  type        = string
+  default     = "my-first"
+}
+
+variable "network_name" {
+    default = "net-for-flask-project"
+}
