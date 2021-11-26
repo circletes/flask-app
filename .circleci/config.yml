@@ -16,21 +16,18 @@ jobs:
            terraform plan
   deploy:
     docker:
-      - image: google/cloud-sdk
+      - image: hashicorp/terraform
     steps:
+     - checkout
      - setup_remote_docker
      - run:
          name: simple deployment
          command: |
-            echo "$GCLOUD_ACC" | base64 --d > gcloud-service-key.json
-            gcloud auth activate-service-account --key-file gcloud-service-key.json
-            gcloud --quiet config set project $GOOGLE_PROJECT_ID
-            gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
-            gcloud container clusters get-credentials my-first-cluster-478590a8-dev --region europe-west3
-            curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-            helm repo add ${GCP_PROJECT_NAME} "https://raw.githubusercontent.com/circletes/helm/dev"
-            helm repo update
-            helm upgrade --install ${GCP_PROJECT_NAME} ${GCP_PROJECT_NAME}/my-first --set=container.tag=${CIRCLE_SHA1::7}
+            echo $GOOGLE_CRED > terraform/credentials.json
+            export GOOGLE_APPLICATION_CREDENTIALS="/root/project/terraform/credentials.json"
+            cd terraform/
+            terraform init
+            terraform apply -auto-approve
 workflows:
   version: 2
   build_push_and_deploy:
@@ -38,8 +35,13 @@ workflows:
       - init_and_plan:
          context:
            - flask
+      - hold:
+          type: approval
+          requires:
+           - init_and_plan 
       - deploy:
          context:
            - flask
          requires:
            - init_and_plan
+           - hold
