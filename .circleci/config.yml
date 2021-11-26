@@ -1,19 +1,18 @@
 version: 2
 jobs:
-  push:
+  init_and_plan:
     docker:
-      - image: google/cloud-sdk
+      - image: hashicorp/terraform
     steps:
      - checkout
      - setup_remote_docker
      - run:
-         name: push in gcr
+         name: init plugins and build infrastructure
          command: |
-           TAG=${CIRCLE_SHA1::7}
-           docker build -t address-book .
-           docker tag address-book:latest eu.gcr.io/${GOOGLE_PROJECT_ID}/address-book/dev:${CIRCLE_SHA1::7}
-           echo "$GCLOUD_ACC" | base64 -d | docker login -u _json_key --password-stdin https://eu.gcr.io
-           docker push eu.gcr.io/${GOOGLE_PROJECT_ID}/address-book/dev:${CIRCLE_SHA1::7}
+           echo $GOOGLE_CRED > ./flask-app/terraform/credentials.json
+           cd ./flask-app/terraform/
+           terraform init
+           terraform plan
   deploy:
     docker:
       - image: google/cloud-sdk
@@ -35,11 +34,11 @@ workflows:
   version: 2
   build_push_and_deploy:
     jobs:
-      - push:
+      - init_and_plan:
          context:
-           - gcp
+           - flask
       - deploy:
          context:
-           - gcp
+           - flask
          requires:
-           - push
+           - init_and_plan
