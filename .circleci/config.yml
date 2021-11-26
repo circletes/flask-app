@@ -2,7 +2,7 @@ version: 2
 jobs:
   init_and_plan:
     docker:
-      - image: sennerholm/google-cloud-sdk-terraform
+      - image: shakurit0/docker-for-tf-with-gcloud
     steps:
      - checkout
      - setup_remote_docker
@@ -16,7 +16,7 @@ jobs:
            terraform plan
   deploy:
     docker:
-      - image: sennerholm/google-cloud-sdk-terraform
+      - image: shakurit0/docker-for-tf-with-gcloud
     steps:
      - checkout
      - setup_remote_docker
