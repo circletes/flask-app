@@ -24,7 +24,7 @@ jobs:
          name: simple deployment
          command: |
             echo "$GOOGLE_CRED" > gcloud-service-key.json
-            gcloud auth activate-service-account $SERVICE_ACCOUNT@DOMAIN.COM --key-file=/root/project/gcloud-service-key.json --project=PROJECT_ID
+            gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=/root/project/gcloud-service-key.json --project=$PROJECT
             cd terraform/
             terraform init
             terraform apply -auto-approve
