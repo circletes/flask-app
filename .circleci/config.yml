@@ -10,7 +10,6 @@ jobs:
          name: init plugins and build infrastructure
          command: |
            export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_CRED
- #          echo $GOOGLE_CRED > terraform/credentials.json
            cd terraform/
            terraform init
            terraform plan
