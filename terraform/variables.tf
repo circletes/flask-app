@@ -93,3 +93,6 @@ variable "project_name" {
 variable "network_name" {
     default = "net-for-flask-project"
 }
+#variable "service_account_key"{
+#default = ".credentials.json"
+#}
