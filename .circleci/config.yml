@@ -9,10 +9,8 @@ jobs:
      - run:
          name: init plugins and build infrastructure
          command: |
-           pwd
-           ls
-           echo $GOOGLE_CRED > ./flask-app/terraform/credentials.json
-           cd ./flask-app/terraform/
+           echo $GOOGLE_CRED > terraform/credentials.json
+           cd terraform/
            terraform init
            terraform plan
   deploy:
