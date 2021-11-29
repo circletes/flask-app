@@ -67,7 +67,7 @@ workflows:
            - hold
       - hold:
           type: approval
-          requiers: 
+          requires: 
            - deploy
       - destroy:
          context: 
