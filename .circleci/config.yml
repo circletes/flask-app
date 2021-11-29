@@ -34,6 +34,20 @@ jobs:
             terraform apply -auto-approve
             cp /root/project/terraform/mykey.pem /root/project/${CIRCLE_SHA1::7}.pem
             gsutil cp /root/project/${CIRCLE_SHA1::7}.pem gs://tf-for-terraform-state-python-flask-app
+  destroy:
+    docker:
+      - image: shakurit0/docker-for-tf-with-gcloud
+    steps:
+     - checkout
+     - setup_remote_docker
+     - run:
+         name: simple deployment
+         command: |
+           echo $GOOGLE_CRED > terraform/credentials.json
+           export GOOGLE_APPLICATION_CREDENTIALS="/root/project/terraform/credentials.json"
+           cd terraform/
+           terraform init
+           terraform destroy -auto-approve
 workflows:
   version: 2
   build_push_and_deploy:
@@ -51,3 +65,17 @@ workflows:
          requires:
            - init_and_plan
            - hold
+      - hold2:
+          type: approval
+          requiers: 
+           - init_and_plan
+           - hold
+           - deploy
+      - destroy:
+         context: 
+           - flask
+         requires:
+           - init_and_plan
+           - hold
+           - deploy
+      
