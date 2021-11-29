@@ -65,7 +65,7 @@ workflows:
          requires:
            - init_and_plan
            - hold
-      - hold2:
+      - hold:
           type: approval
           requiers: 
            - init_and_plan
@@ -78,5 +78,5 @@ workflows:
            - init_and_plan
            - hold
            - deploy
-           - hold2
+           - hold
       
