@@ -65,14 +65,18 @@ workflows:
          requires:
            - init_and_plan
            - hold
-      - hold:
+      - hold2:
           type: approval
-          requires: 
+          requires:
+           - init_and_plan
+           - hold
            - deploy
       - destroy:
          context: 
            - flask
          requires:
-           - deploy
+           - init_and_plan
            - hold
+           - deploy
+           - hold2
       
