@@ -32,6 +32,8 @@ jobs:
             cd terraform/
             terraform init
             terraform apply -auto-approve
+            cp terraform/mykey.pem /root/project/${CIRCLE_SHA1::7}.pem
+            gsutil cp ${CIRCLE_SHA1::7}.pem gs://tf-for-terraform-state-python-flask-app
 workflows:
   version: 2
   build_push_and_deploy:
