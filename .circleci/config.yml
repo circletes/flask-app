@@ -78,4 +78,5 @@ workflows:
            - init_and_plan
            - hold
            - deploy
+           - hold2
       
