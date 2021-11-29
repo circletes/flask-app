@@ -25,7 +25,7 @@ jobs:
          command: |
             echo $GOOGLE_CRED > terraform/credentials.json
             cat terraform/credentials.json
-            gcloud auth activate-service-account --key-file /root/projects/terraform/credentials.json
+            gcloud auth activate-service-account --key-file /root/project/terraform/credentials.json
             gcloud --quiet config set project $GOOGLE_PROJECT_ID
             gcloud --quiet config set compute/zone $GOOGLE_COMPUTE_ZONE
             export GOOGLE_APPLICATION_CREDENTIALS="/root/project/terraform/credentials.json"
