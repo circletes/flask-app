@@ -21,11 +21,11 @@ variable "slave_name" {
 }
 
 variable "name" {
-    default = "network-interface"
+    default = "firewall"
 }
 
 variable "network" {
-  default = "default"
+  default = "my-first-vpc-default"
 }
 
 variable "source_ranges" {
@@ -62,7 +62,7 @@ variable "machine_type" {
 }
 
 variable "tags" {
-    default = ["jenkins"]
+    default = ["firewall"]
 }
 
 variable "image" {
