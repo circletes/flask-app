@@ -18,6 +18,7 @@ boot_disk {
   image = var.image //"ubuntu-minimal-2004-focal-v20211030"
 }
 }
+metadata_startup_script = file("./jenkins.sh")
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
 subnetwork = "${var.network_name}-private-subnet"
@@ -42,6 +43,7 @@ boot_disk {
   image = var.image //"ubuntu-minimal-2004-focal-v20211030"
 }
 }
+metadata_startup_script = file("./slave.sh")
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
 subnetwork = "${var.network_name}-private-subnet"
@@ -70,6 +72,7 @@ boot_disk {
   image = var.image //"ubuntu-minimal-2004-focal-v20211030"
 }
 }
+metadata_startup_script = file("./apache.sh")
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
 subnetwork = "${var.network_name}-private-subnet"
