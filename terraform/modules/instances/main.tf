@@ -20,7 +20,7 @@ boot_disk {
 }
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
-subnetwork = "${var.network_name}-private-subnet"
+subnetwork = "private"
 #access_config{
 #}
 }
@@ -44,7 +44,7 @@ boot_disk {
 }
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
-subnetwork = "${var.network_name}-private-subnet"
+subnetwork = "private"
 #access_config{
 #}
 }
@@ -72,7 +72,7 @@ boot_disk {
 }
 network_interface {
 network = var.network_name//"[${var.network_name}-public-subnet] [${var.network_name}-private-subnet]"
-subnetwork = "${var.network_name}-private-subnet"
+subnetwork = "public"
 access_config{
 }
 }
