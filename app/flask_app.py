@@ -18,10 +18,6 @@ def whoami():
     server_time = time.strftime('%A %B, %d %Y %H:%M:%S')
     return f"Browser: {browser}; Ip Adress: {ip_adress}; Server time: {server_time}."
 
-
-@app.route('/debug-sentry')
-def trigger_error():
-    division_by_zero = 1 / 0
     
 @app.route('/source_code')
 def source_code():
